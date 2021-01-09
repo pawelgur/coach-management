@@ -3,14 +3,26 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { NewMemberPageComponent } from './new-member-page/new-member-page.component';
+import { AllMembersPageComponent } from './all-members-page/all-members-page.component';
+import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MaterialModule} from "./material.module";
+import { MemberComponent } from './all-members-page/member/member.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NewMemberPageComponent,
+    AllMembersPageComponent,
+    NotFoundPageComponent,
+    MemberComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

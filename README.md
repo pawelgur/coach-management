@@ -1,6 +1,11 @@
-# CoucherManagement
+# Couching Management
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.6.
+
+## TODO
+- [a lot of stuff]
+- add aria labels/semantic stuff
+
 
 ## Development server
 

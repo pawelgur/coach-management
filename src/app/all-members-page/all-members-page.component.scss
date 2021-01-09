@@ -1,0 +1,14 @@
+@import "../../vars";
+
+:host {
+  display: block;
+}
+
+mat-card-content {
+  padding: $basePadding 0;
+  overflow-x: auto;
+}
+
+ul {
+  padding-inline-start: 0px;
+}

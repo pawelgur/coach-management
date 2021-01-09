@@ -1,0 +1,13 @@
+@import "theme";
+
+$primaryColor: mat-color($primary);
+$primaryColorLighter: mat-color($primary, lighter);
+$primaryContrastColor: mat-color($primary, default-contrast);
+
+$accentColor: mat-color($accent);
+
+$warnColor: mat-color($mat-red, 500);
+
+$basePadding: 20px;
+
+$memberDataFieldWidth: 240px;

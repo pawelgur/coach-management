@@ -1,1 +1,16 @@
-<router-outlet></router-outlet>
+<header>
+  <a class="main-title"
+     routerLink="/">Couching Management</a>
+  <nav>
+    <a mat-stroked-button
+       routerLink="/members"
+       routerLinkActive="active">All Members</a>
+    <a mat-stroked-button
+       routerLink="/new-member"
+       routerLinkActive="active">Add member</a>
+  </nav>
+</header>
+<div class="main-content">
+  <router-outlet></router-outlet>
+</div>
+

@@ -1,0 +1,19 @@
+<div class="member-data">
+  <div class="fields">
+    <span class="field">{{memberNode.node.fullName}}</span>
+    <span class="field">{{memberNode.node.email}}</span>
+    <span class="field">{{memberNode.node.fullName}}</span>
+  </div>
+  <span class="action-wrapper">
+      <mat-icon class="remove action" title="remove">remove_circle</mat-icon>
+      <mat-icon class="move-up action" title="move up">arrow_drop_down_circle</mat-icon>
+      <mat-icon class="move-down action" title="move down">arrow_drop_down_circle</mat-icon>
+  </span>
+</div>
+
+<ul>
+  <!-- add track by -->
+  <li *ngFor="let member of memberNode.children">
+    <app-member [member]="member"></app-member>
+  </li>
+</ul>
