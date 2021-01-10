@@ -1,4 +1,6 @@
-# Couching Management
+# Coach Management App
+
+Basic app that supports adding new members into hierarchical structure and displaying it as a tree that can be reordered.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.6.
 
