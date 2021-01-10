@@ -5,15 +5,15 @@
     <span class="field">{{memberNode.node.fullName}}</span>
   </div>
   <span class="action-wrapper">
-      <mat-icon class="remove action" title="remove">remove_circle</mat-icon>
-      <mat-icon class="move-up action" title="move up">arrow_drop_down_circle</mat-icon>
-      <mat-icon class="move-down action" title="move down">arrow_drop_down_circle</mat-icon>
+      <mat-icon class="remove action" title="remove" (click)="remove()">remove_circle</mat-icon>
+      <mat-icon class="move-up action" title="move up" (click)="moveUp()">arrow_drop_down_circle</mat-icon>
+      <mat-icon class="move-down action" title="move down" (click)="moveUp()">arrow_drop_down_circle</mat-icon>
   </span>
 </div>
 
 <ul>
   <!-- add track by -->
-  <li *ngFor="let member of memberNode.children">
+  <li *ngFor="let member of memberNode.children; trackBy: trackById">
     <app-member [member]="member"></app-member>
   </li>
 </ul>

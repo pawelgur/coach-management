@@ -6,6 +6,10 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - [a lot of stuff]
 - add aria labels/semantic stuff
 
+## Nice to have
+- email field autocomplete based on full name
+- coach select with text search
+
 
 ## Development server
 

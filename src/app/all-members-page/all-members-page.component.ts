@@ -1,5 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {Member, Tree} from "../models";
+import { MembersStorageService } from "../services/members-storage.service";
+import { MembersTreeService } from "../services/members-tree.service";
 
 @Component({
   selector: 'app-all-members-page',
@@ -9,26 +11,15 @@ import {Member, Tree} from "../models";
 })
 export class AllMembersPageComponent implements OnInit {
 
-  members: Tree<Member> = {
-    node: { fullName: "Penelope Randi", email: "penelope.randi@example.com" },
-    children: [
-      { node: { fullName: "Penelope Randi Child 1", email: "penelope.randi@example.com" } },
-      {
-        node: { fullName: "Penelope Randi Child 2", email: "penelope.randi@example.com" },
-        children: [
-          {
-            node: { fullName: "Penelope Randi 2 Grand Child", email: "penelope.randi@example.com" },
-            children: [{ node: { fullName: "Penelope Randi Granddd", email: "penelope.randi@example.com" } }]
-          },
-        ]
-      },
-      { node: { fullName: "Penelope Randi Child 3", email: "penelope.randi@example.com" } },
-    ]
-  }
+  membersTree!: Tree<Member>;
 
-  constructor() { }
+  constructor(
+    private membersStorageService: MembersStorageService,
+    private membersTreeService: MembersTreeService
+  ) { }
 
   ngOnInit(): void {
+    this.membersTree = this.membersTreeService.generateTree(this.membersStorageService.getAll());
   }
 
 }

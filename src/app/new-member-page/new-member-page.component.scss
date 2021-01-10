@@ -2,6 +2,10 @@
   display: block;
 }
 
+mat-card-content {
+  min-height: 250px;
+}
+
 mat-form-field {
   display: block;
   max-width: 400px;
@@ -9,4 +13,9 @@ mat-form-field {
 
 button {
   margin-right: 5px;
+}
+
+mat-spinner {
+  top: 100px;
+  left: calc(50% - 15px);
 }

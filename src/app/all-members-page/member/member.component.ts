@@ -16,8 +16,20 @@ export class MemberComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  trackById(member: Tree<Member>) {
-    return member.node.id;
+  trackById(_index: number, item: Tree<Member>): number {
+    return item.node.id;
+  }
+
+  remove() {
+
+  }
+
+  moveUp() {
+
+  }
+
+  moveDown() {
+
   }
 
 }

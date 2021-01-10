@@ -7,8 +7,9 @@ import { NewMemberPageComponent } from './new-member-page/new-member-page.compon
 import { AllMembersPageComponent } from './all-members-page/all-members-page.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MaterialModule} from "./material.module";
+import { MaterialModule } from "./material.module";
 import { MemberComponent } from './all-members-page/member/member.component';
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { MemberComponent } from './all-members-page/member/member.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

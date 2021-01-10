@@ -3,25 +3,34 @@
     Create new member
   </mat-card-title>
   <mat-card-content>
-    <form>
+    <form [formGroup]="memberForm" (ngSubmit)="submit()" *ngIf="!showLoader">
       <mat-form-field appearance="fill">
         <mat-label>Full Name</mat-label>
-        <input matInput type="text" required>
+        <input matInput type="text" required formControlName="fullName">
+        <mat-error *ngIf="getNameError()">{{getNameError()}}</mat-error>
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Email</mat-label>
-        <input matInput type="email" required>
+        <input matInput type="email" required formControlName="email">
+        <mat-error *ngIf="getEmailError()">{{getEmailError()}}</mat-error>
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Coach</mat-label>
-        <select matNativeControl required>
-          <option></option>
-          <option *ngFor="let coach of coaches" value="{{coach.id}}">{{coach.fullName}}</option>
+        <select matNativeControl required formControlName="coach">
+          <option disabled></option>
+          <option *ngFor="let coach of coaches"
+                  [ngValue]="coach.id">{{coach.fullName}}</option>
         </select>
       </mat-form-field>
-      <button mat-raised-button color="accent" type="submit">Create</button>
-      <button mat-raised-button  color="warn" type="reset">Clear</button>
+      <button mat-raised-button
+              color="accent"
+              type="submit"
+              [disabled]="!memberForm.valid">Create</button>
+     <button mat-raised-button
+             color="warn"
+             type="reset">Clear</button>
     </form>
+    <mat-spinner *ngIf="showLoader"></mat-spinner>
   </mat-card-content>
 </mat-card>
 
