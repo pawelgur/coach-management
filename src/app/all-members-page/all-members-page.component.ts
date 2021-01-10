@@ -1,7 +1,7 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {Member, Tree} from "../models";
-import { MembersStorageService } from "../services/members-storage.service";
 import { MembersTreeService } from "../services/members-tree.service";
+import { Observable } from "rxjs";
 
 @Component({
   selector: 'app-all-members-page',
@@ -9,17 +9,16 @@ import { MembersTreeService } from "../services/members-tree.service";
   styleUrls: ['./all-members-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AllMembersPageComponent implements OnInit {
+export class AllMembersPageComponent {
 
-  membersTree!: Tree<Member>;
+  membersTree$: Observable<Tree<Member>>;
 
   constructor(
-    private membersStorageService: MembersStorageService,
     private membersTreeService: MembersTreeService
-  ) { }
-
-  ngOnInit(): void {
-    this.membersTree = this.membersTreeService.generateTree(this.membersStorageService.getAll());
+  ) {
+    // not nice from performance perspective to completely regenerate whole tree for each update
+    // would be better to make immutable and rebuild only changed leaves
+    this.membersTree$ = membersTreeService.getTree$();
   }
 
 }

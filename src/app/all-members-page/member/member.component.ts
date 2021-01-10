@@ -1,5 +1,6 @@
 import {Component, OnInit, ChangeDetectionStrategy, Input} from '@angular/core';
 import {Member, Tree} from "../../models";
+import { MembersTreeService } from "../../services/members-tree.service";
 
 @Component({
   selector: 'app-member',
@@ -11,7 +12,9 @@ export class MemberComponent implements OnInit {
 
   @Input("member") memberNode!: Tree<Member>;
 
-  constructor() { }
+  constructor(
+    private membersTreeService: MembersTreeService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -21,7 +24,7 @@ export class MemberComponent implements OnInit {
   }
 
   remove() {
-
+    this.membersTreeService.removeNode(this.memberNode.node.id);
   }
 
   moveUp() {

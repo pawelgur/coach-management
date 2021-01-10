@@ -1,5 +1,6 @@
 import {Injectable} from "@angular/core";
-import { DbMember, Member } from "../models";
+import { Member } from "../models";
+import { LocalStorageRef } from "./local-storage-ref";
 
 const storageKey = "coachManagement.members";
 
@@ -7,9 +8,11 @@ const storageKey = "coachManagement.members";
 export class MembersStorageService {
 
   private lastId = 0;
-  private membersDatabase: Record<number, DbMember> = {};
+  private membersDatabase: Record<number, Member> = {};
 
-  constructor() {
+  constructor(
+    private storageRef: LocalStorageRef
+  ) {
     this.loadFromStorage();
   }
 
@@ -26,9 +29,10 @@ export class MembersStorageService {
     const member = { fullName, email, coach: coachId, id: this.lastId, trainees: [] };
     const coach = this.membersDatabase[coachId]!;
 
-    console.log("creating member", member);
     this.set(member);
     this.set({ ...coach, trainees: [...coach.trainees, member.id] });
+    console.log("member created", member, "new state:", this.membersDatabase);
+
     this.updateStorage();
 
     return member;
@@ -40,27 +44,36 @@ export class MembersStorageService {
       return;
     }
 
-    console.log("removing member", member);
     delete this.membersDatabase[id];
 
-    const coach = member.coach && this.membersDatabase[member.coach];
+    const coach = member.coach !== undefined && this.membersDatabase[member.coach];
     if (coach) {
-      this.set({ ...coach, trainees: coach.trainees.filter(x => x !== member.id) });
+      const newTrainees = coach.trainees.filter(x => x !== member.id);
+      for (const traineeId of member.trainees) {
+        const trainee = this.get(traineeId);
+        if (trainee) {
+          newTrainees.push(traineeId);
+          this.set({ ...trainee, coach: coach.id });
+        }
+        this.set({...coach, trainees: newTrainees});
+      }
     }
 
+    console.log("member removed", member, "new state:", this.membersDatabase);
     this.updateStorage();
   }
 
-  private set(member: DbMember): void {
+  private set(member: Member): void {
     this.membersDatabase[member.id] = member;
   }
 
   private loadFromStorage(): void {
-    const itemsRaw = window?.localStorage?.getItem(storageKey);
+    const itemsRaw = this.storageRef.get().getItem(storageKey);
     if (itemsRaw) {
       this.membersDatabase = JSON.parse(itemsRaw);
       const ids = Object.keys(this.membersDatabase);
       this.lastId = parseInt(ids.sort().pop() || "0", 10);
+      console.log("database loaded", this.membersDatabase);
       return;
     }
 
@@ -71,7 +84,7 @@ export class MembersStorageService {
   }
 
   private updateStorage(): void {
-    window?.localStorage?.setItem(storageKey, JSON.stringify(this.membersDatabase));
+    this.storageRef.get().setItem(storageKey, JSON.stringify(this.membersDatabase));
   }
 
 }

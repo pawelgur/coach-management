@@ -5,7 +5,7 @@
   <mat-card-content>
     <ul>
       <li>
-        <app-member [member]="membersTree"></app-member>
+        <app-member *ngIf="membersTree$ | async as tree" [member]="tree"></app-member>
       </li>
     </ul>
   </mat-card-content>

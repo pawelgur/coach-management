@@ -53,7 +53,7 @@ export class NewMemberPageComponent implements OnInit {
     const rawMember = this.memberForm.getRawValue();
     this.memberStorageService.create(rawMember.fullName, rawMember.email, parseInt(rawMember.coach, 10));
 
-    await new Promise(r => setTimeout(() => r(), 1000)); // emulate server call for more realistic UI
+    await new Promise(r => setTimeout(() => r(), 500)); // emulate server call for more realistic UI
     await this.router.navigate(["/members"]);
     this.showLoader = false;
   }

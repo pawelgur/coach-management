@@ -3,13 +3,7 @@ export interface Member {
   fullName: string;
   email: string;
   trainees: number[];
-}
-
-/**
- * model saved in database with extra parent link for fast removal
- */
-export interface DbMember extends Member {
-  coach: number | undefined;
+  coach?: number;
 }
 
 export interface Tree<TNode> {
