@@ -4,9 +4,12 @@ Basic app that supports adding new members into hierarchical structure and displ
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.6.
 
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Running app
+```
+npm i
+npm run serve
+```
+Navigate to `http://localhost:4200/`
 
 ## Running unit tests
 
