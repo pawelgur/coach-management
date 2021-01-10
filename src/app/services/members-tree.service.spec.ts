@@ -7,7 +7,7 @@ import { LocalStorageRef } from "./local-storage-ref";
 describe("MembersService", () => {
   let treeService: MembersTreeService;
 
-  function setUpTest(membersMock: Record<number, Member>) : void {
+  function setUpTest(membersMock: Record<number, Member>): void {
     TestBed.configureTestingModule({
       providers: [
         MembersTreeService,

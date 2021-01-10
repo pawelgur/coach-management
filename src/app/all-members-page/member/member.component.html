@@ -22,6 +22,6 @@
 
 <ul>
   <li *ngFor="let member of memberNode.children; trackBy: trackById">
-    <app-member [member]="member"></app-member>
+    <app-member [memberNode]="member"></app-member>
   </li>
 </ul>

@@ -1,15 +1,15 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Member, MemberFormFields } from "../models";
-import { MembersStorageService } from "../services/members-storage.service";
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, ValidatorFn, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { casedWordsValidator, memberEmailNameValidator, uniqueValueValidator, wordCountValidator } from "../validators";
 import { filter, tap } from "rxjs/operators";
+import { Member, MemberFormFields } from "../models";
+import { MembersStorageService } from "../services/members-storage.service";
+import { casedWordsValidator, memberEmailNameValidator, uniqueValueValidator, wordCountValidator } from "../validators";
 
 @Component({
-  selector: 'app-new-member-page',
-  templateUrl: './new-member-page.component.html',
-  styleUrls: ['./new-member-page.component.scss'],
+  selector: "app-new-member-page",
+  templateUrl: "./new-member-page.component.html",
+  styleUrls: ["./new-member-page.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewMemberPageComponent implements OnInit {
@@ -73,7 +73,7 @@ export class NewMemberPageComponent implements OnInit {
     return undefined;
   }
 
-  getEmailError(): string | undefined  {
+  getEmailError(): string | undefined {
     const emailField = this.memberForm.get(MemberFormFields.email)!;
     if (emailField.hasError("email")) {
       return "It is not valid email address";

@@ -2,7 +2,7 @@ import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from "@angu
 import { MemberFormFields } from "./models";
 
 export function casedWordsValidator(): ValidatorFn {
-  return (control: AbstractControl): {[key: string]: any} | null => {
+  return (control: AbstractControl): { [key: string]: any } | null => {
     const words = getWords(control);
     return words?.length && words.find(word => word[0] !== word[0].toUpperCase())
       ? { casedWords: control.value }
@@ -11,7 +11,7 @@ export function casedWordsValidator(): ValidatorFn {
 }
 
 export function wordCountValidator(maxWordCount: number): ValidatorFn {
-  return (control: AbstractControl): {[key: string]: any} | null => {
+  return (control: AbstractControl): { [key: string]: any } | null => {
     const words = getWords(control);
     return words && words.length > maxWordCount
       ? { wordCount: control.value }
@@ -20,7 +20,7 @@ export function wordCountValidator(maxWordCount: number): ValidatorFn {
 }
 
 export function uniqueValueValidator(existingValues: string[]): ValidatorFn {
-  return (control: AbstractControl): {[key: string]: any} | null => {
+  return (control: AbstractControl): { [key: string]: any } | null => {
     if (!control.value) {
       return null;
     }

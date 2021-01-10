@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import { Injectable } from "@angular/core";
 import { Member } from "../models";
 import { LocalStorageRef } from "./local-storage-ref";
 
@@ -95,7 +95,7 @@ export class MembersStorageService {
           newTrainees.push(traineeId);
           this.set({ ...trainee, coach: coach.id });
         }
-        this.set({...coach, trainees: newTrainees});
+        this.set({ ...coach, trainees: newTrainees });
       }
     }
 

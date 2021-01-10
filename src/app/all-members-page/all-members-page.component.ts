@@ -1,12 +1,12 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {Member, Tree} from "../models";
-import { MembersTreeService } from "../services/members-tree.service";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { Observable } from "rxjs";
+import { Member, Tree } from "../models";
+import { MembersTreeService } from "../services/members-tree.service";
 
 @Component({
-  selector: 'app-all-members-page',
-  templateUrl: './all-members-page.component.html',
-  styleUrls: ['./all-members-page.component.scss'],
+  selector: "app-all-members-page",
+  templateUrl: "./all-members-page.component.html",
+  styleUrls: ["./all-members-page.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AllMembersPageComponent {

@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
-import { Member, Tree } from "../models";
 import { BehaviorSubject, Observable } from "rxjs";
-import { MembersStorageService } from "./members-storage.service";
 import { map } from "rxjs/operators";
+import { MembersStorageService } from "./members-storage.service";
+import { Member, Tree } from "../models";
 
 const maxTreeSize = 2000;
 

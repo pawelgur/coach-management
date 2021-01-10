@@ -1,8 +1,9 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import {AllMembersPageComponent} from "./all-members-page/all-members-page.component";
-import {NewMemberPageComponent} from "./new-member-page/new-member-page.component";
-import {NotFoundPageComponent} from "./not-found-page/not-found-page.component";
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+
+import { AllMembersPageComponent } from "./all-members-page/all-members-page.component";
+import { NewMemberPageComponent } from "./new-member-page/new-member-page.component";
+import { NotFoundPageComponent } from "./not-found-page/not-found-page.component";
 
 const routes: Routes = [
   {
@@ -30,4 +31,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}
