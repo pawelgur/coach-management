@@ -27,7 +27,7 @@ describe("MembersService", () => {
     treeService = TestBed.inject(MembersTreeService);
   }
 
-  describe("given multi level members dataset", () => {
+  describe("given complex multi level members dataset", () => {
     const MEMBERS_MOCK: Record<number, Member> = {
         0: { id: 0, fullName: "owner", email: "", trainees: [1, 2, 3, 4] },
           1: { id: 1, fullName: "member 1", email: "", trainees: [], coach: 0 },
@@ -140,6 +140,69 @@ describe("MembersService", () => {
         expect(tree).toEqual(expectedTree)
       );
     });
+  });
+
+  describe("given multi level members dataset", () => {
+    const MEMBERS_MOCK: Record<number, Member> = {
+        0: { id: 0, fullName: "owner", email: "", trainees: [1, 2, 3] },
+          1: { id: 1, fullName: "member 1", email: "", trainees: [], coach: 0 },
+          2: { id: 2, fullName: "member 2", email: "", trainees: [5], coach: 0 },
+            5: { id: 5, fullName: "member 5", email: "", trainees: [], coach: 2 },
+          3: { id: 3, fullName: "member 3", email: "", trainees: [], coach: 0 }
+      };
+
+    beforeEach(() => {
+      setUpTest(MEMBERS_MOCK);
+    });
+
+    describe("when node is moved up", () => {
+      it("should move it together with children", () => {
+        treeService.move(2, "up");
+
+        const expectedTree: Tree<Member> = {
+          node: { ...MEMBERS_MOCK[0], trainees: [2, 1, 3] },
+          children: [
+            {
+              node: MEMBERS_MOCK[2],
+              children: [
+                { node: MEMBERS_MOCK[5], children: [] },
+              ]
+            },
+            { node: MEMBERS_MOCK[1], children: [] },
+            { node: MEMBERS_MOCK[3], children: [] }
+          ]
+        };
+
+        treeService.getTree$().subscribe(tree =>
+          expect(tree).toEqual(expectedTree)
+        );
+      });
+    });
+
+    describe("when node is moved down", () => {
+      it("should move it together with children", () => {
+        treeService.move(2, "down");
+
+        const expectedTree: Tree<Member> = {
+          node: { ...MEMBERS_MOCK[0], trainees: [1, 3, 2] },
+          children: [
+            { node: MEMBERS_MOCK[1], children: [] },
+            { node: MEMBERS_MOCK[3], children: [] },
+            {
+              node: MEMBERS_MOCK[2],
+              children: [
+                { node: MEMBERS_MOCK[5], children: [] },
+              ]
+            }
+          ]
+        };
+
+        treeService.getTree$().subscribe(tree =>
+          expect(tree).toEqual(expectedTree)
+        );
+      });
+    });
+
   });
 
   describe("given members number above limit", () => {

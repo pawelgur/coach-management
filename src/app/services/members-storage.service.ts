@@ -24,6 +24,14 @@ export class MembersStorageService {
     return this.membersDatabase[id];
   }
 
+  getCoach(memberId: number): Member | undefined {
+    const member = this.membersDatabase[memberId];
+    if (member?.coach === undefined) {
+      return;
+    }
+    return this.membersDatabase[member.coach];
+  }
+
   create(fullName: string, email: string, coachId: number): Member {
     this.lastId++;
     const member = { fullName, email, coach: coachId, id: this.lastId, trainees: [] };
@@ -33,9 +41,43 @@ export class MembersStorageService {
     this.set({ ...coach, trainees: [...coach.trainees, member.id] });
     console.log("member created", member, "new state:", this.membersDatabase);
 
-    this.updateStorage();
-
     return member;
+  }
+
+  move(id: number, direction: "up" | "down"): void {
+    const coach = this.getCoach(id);
+    if (!coach) {
+      return;
+    }
+
+    const i = coach.trainees.indexOf(id);
+    const before = coach.trainees.slice(0, i);
+    const after = coach.trainees.slice(i + 1);
+    switch (direction) {
+      case "up":
+        if (!before.length) {
+          return;
+        }
+        const elementBefore = before.pop();
+        before.push(id);
+        if (elementBefore !== undefined) {
+          before.push(elementBefore);
+        }
+        break;
+      case "down":
+        if (!after.length) {
+          return;
+        }
+        const elementAfter = after.shift();
+        if (elementAfter !== undefined) {
+          before.push(elementAfter);
+        }
+        before.push(id);
+        break;
+    }
+
+    this.set({ ...coach, trainees: [...before, ...after] });
+    console.log("member moved", id, "new state:", this.membersDatabase);
   }
 
   remove(id: number): void {
@@ -44,9 +86,7 @@ export class MembersStorageService {
       return;
     }
 
-    delete this.membersDatabase[id];
-
-    const coach = member.coach !== undefined && this.membersDatabase[member.coach];
+    const coach = this.getCoach(id);
     if (coach) {
       const newTrainees = coach.trainees.filter(x => x !== member.id);
       for (const traineeId of member.trainees) {
@@ -59,12 +99,15 @@ export class MembersStorageService {
       }
     }
 
-    console.log("member removed", member, "new state:", this.membersDatabase);
+    delete this.membersDatabase[id];
     this.updateStorage();
+
+    console.log("member removed", member, "new state:", this.membersDatabase);
   }
 
   private set(member: Member): void {
     this.membersDatabase[member.id] = member;
+    this.updateStorage();
   }
 
   private loadFromStorage(): void {

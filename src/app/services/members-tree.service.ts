@@ -22,6 +22,21 @@ export class MembersTreeService {
     this.members$.next(this.membersStorageService.getAll());
   }
 
+  move(id: number, direction: "up" | "down"): void {
+    this.membersStorageService.move(id, direction);
+    this.members$.next(this.membersStorageService.getAll());
+  }
+
+  canMoveUp(id: number): boolean {
+    const coach = this.membersStorageService.getCoach(id);
+    return !!coach?.trainees.length && coach.trainees[0] !== id;
+  }
+
+  canMoveDown(id: number): boolean {
+    const coach = this.membersStorageService.getCoach(id);
+    return !!coach?.trainees.length && coach.trainees[coach.trainees.length - 1] !== id;
+  }
+
   getTree$(): Observable<Tree<Member>> {
     return this.members$.pipe(
       map(members => this.generateTree(members))
@@ -29,7 +44,7 @@ export class MembersTreeService {
   }
 
   // note: alternatively can be implemented with recursion
-  generateTree(members: Record<number, Member>): Tree<Member> {
+  private generateTree(members: Record<number, Member>): Tree<Member> {
     const rootMember = members[0]!;
     const tree: Tree<Member> = { node: rootMember, children: [] };
     const stack: Tree<Member>[] = [];
@@ -43,9 +58,15 @@ export class MembersTreeService {
         !currentTree.children.find(traversedChild => traversedChild.node.id === id)
       );
 
-      if (!nextChild || !members[nextChild] || treeSize === maxTreeSize) {
+      if (!nextChild || treeSize === maxTreeSize) {
         stack.pop();
         currentTree = stack[stack.length - 1];
+        continue;
+      }
+
+      if (!members[nextChild]) {
+        console.warn(`no member data found for child ${nextChild} of ${currentTree.node.id}, data got corrupted`);
+        currentTree.node.trainees = currentTree.node.trainees.filter(x => x !== nextChild);
         continue;
       }
 

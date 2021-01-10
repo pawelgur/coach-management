@@ -16,8 +16,8 @@ export class AllMembersPageComponent {
   constructor(
     private membersTreeService: MembersTreeService
   ) {
-    // not nice from performance perspective to completely regenerate whole tree for each update
-    // would be better to make immutable and rebuild only changed leaves
+    // not nice from performance perspective to completely regenerate whole tree for each update,
+    // would be better to make parts immutable and rebuild only changed leaves
     this.membersTree$ = membersTreeService.getTree$();
   }
 

@@ -23,16 +23,24 @@ export class MemberComponent implements OnInit {
     return item.node.id;
   }
 
-  remove() {
+  remove(): void {
     this.membersTreeService.removeNode(this.memberNode.node.id);
   }
 
-  moveUp() {
-
+  moveUp(): void {
+    this.membersTreeService.move(this.memberNode.node.id, "up");
   }
 
-  moveDown() {
+  moveDown(): void {
+    this.membersTreeService.move(this.memberNode.node.id, "down");
+  }
 
+  canMoveUp(): boolean {
+    return this.membersTreeService.canMoveUp(this.memberNode.node.id);
+  }
+
+  canMoveDown(): boolean {
+    return this.membersTreeService.canMoveDown(this.memberNode.node.id);
   }
 
 }
